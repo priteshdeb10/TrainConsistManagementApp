@@ -68,56 +68,79 @@ public class TrainConsistManagementApp {
         }
     }
 
+    // Bubble sort algorithm implementation for UC16
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                // Swap values when left element is greater than right element
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static void printArray(int[] array) {
+        System.out.print("{");
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i]);
+            if (i < array.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.print("}");
+    }
+
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC15: Safe Cargo Assignment Using try-catch-finally ---\n");
+        System.out.println("--- UC16: Sort Passenger Bogies by Capacity (Bubble Sort) ---\n");
 
-        try {
-            GoodsBogie cylindricalBogie = new GoodsBogie("Oil Tanker", 100, "Cylindrical");
-            GoodsBogie rectangularBogie = new GoodsBogie("Freight Car", 150, "Rectangular");
+        System.out.println("[Test: testSort_BasicSorting]");
+        int[] arr1 = {72, 56, 24, 70, 60};
+        System.out.print("Original: ");
+        printArray(arr1);
+        bubbleSort(arr1);
+        System.out.print("\nSorted:   ");
+        printArray(arr1);
+        System.out.println("\n");
 
-            System.out.println("[Test: testCargo_SafeAssignment]");
-            try {
-                cylindricalBogie.assignCargo("Petroleum");
-                System.out.println("Success: Cargo 'Petroleum' assigned to cylindrical bogie.");
-            } catch (CargoSafetyException e) {
-                System.out.println("Error: " + e.getMessage());
-            } finally {
-                System.out.println("Completion Logging: Cargo validation finished for " + cylindricalBogie.getName() + ".");
-            }
+        System.out.println("[Test: testSort_AlreadySortedArray]");
+        int[] arr2 = {24, 56, 60, 70, 72};
+        System.out.print("Original: ");
+        printArray(arr2);
+        bubbleSort(arr2);
+        System.out.print("\nSorted:   ");
+        printArray(arr2);
+        System.out.println("\n");
 
-            System.out.println("\n[Test: testCargo_UnsafeAssignmentHandled]");
-            try {
-                rectangularBogie.assignCargo("Petroleum");
-                System.out.println("Success: Cargo 'Petroleum' assigned to rectangular bogie.");
-            } catch (CargoSafetyException e) {
-                System.out.println("Validation Caught Runtime Exception: " + e.getMessage());
-            } finally {
-                System.out.println("Completion Logging: Cargo validation finished for " + rectangularBogie.getName() + ".");
-            }
+        System.out.println("[Test: testSort_DuplicateValues]");
+        int[] arr3 = {72, 56, 56, 24};
+        System.out.print("Original: ");
+        printArray(arr3);
+        bubbleSort(arr3);
+        System.out.print("\nSorted:   ");
+        printArray(arr3);
+        System.out.println("\n");
 
-            System.out.println("\n[Test: testCargo_CargoNotAssignedAfterFailure]");
-            if ("None".equals(rectangularBogie.getCargo())) {
-                System.out.println("Verified: Rectangular bogie does not store Petroleum cargo (Current cargo: " + rectangularBogie.getCargo() + ").");
-            }
+        System.out.println("[Test: testSort_SingleElementArray]");
+        int[] arr4 = {50};
+        System.out.print("Original: ");
+        printArray(arr4);
+        bubbleSort(arr4);
+        System.out.print("\nSorted:   ");
+        printArray(arr4);
+        System.out.println("\n");
 
-            System.out.println("\n[Test: testCargo_ProgramContinuesAfterException]");
-            System.out.println("Verified: Application continues running safely after handling the failure.");
-            System.out.println("Attempting a safe assignment to the rectangular bogie...");
-            try {
-                rectangularBogie.assignCargo("Coal");
-                System.out.println("Success: Cargo 'Coal' assigned to rectangular bogie.");
-            } catch (CargoSafetyException e) {
-                System.out.println("Error: " + e.getMessage());
-            } finally {
-                System.out.println("Completion Logging: Cargo validation finished for " + rectangularBogie.getName() + ".");
-            }
-
-            System.out.println("\n[Test: testCargo_FinallyBlockExecution]");
-            System.out.println("Verified: The finally block executes in both success (Coal, Petroleum) and failure scenarios, ensuring cleanup/logging happens.");
-
-        } catch (InvalidCapacityException e) {
-            System.out.println("Setup Failed: " + e.getMessage());
-        }
+        System.out.println("[Test: testSort_AllEqualValues]");
+        int[] arr5 = {40, 40, 40};
+        System.out.print("Original: ");
+        printArray(arr5);
+        bubbleSort(arr5);
+        System.out.print("\nSorted:   ");
+        printArray(arr5);
+        System.out.println();
     }
 }
