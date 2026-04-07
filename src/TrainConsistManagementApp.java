@@ -61,17 +61,17 @@ public class TrainConsistManagementApp {
             this.cargo = cargo;
         }
         
-        public String getShape() {
-            return shape;
-        }
-
-        public String getCargo() {
-            return cargo;
-        }
+        public String getShape() { return shape; }
+        public String getCargo() { return cargo; }
     }
 
-    // UC19: Binary Search for String IDs using low/high/mid
-    public static int binarySearch(String[] arr, String key) {
+    // UC20: Exception Handling During Search
+    public static int searchBogie(String[] arr, String key) {
+        // Defensive State Validation
+        if (arr == null || arr.length == 0) {
+            throw new IllegalStateException("Search operation failed: The bogie collection is empty.");
+        }
+
         int low = 0;
         int high = arr.length - 1;
 
@@ -80,9 +80,9 @@ public class TrainConsistManagementApp {
             int cmp = arr[mid].compareTo(key);
 
             if (cmp < 0) {
-                low = mid + 1; // Key is on the right half
+                low = mid + 1; 
             } else if (cmp > 0) {
-                high = mid - 1; // Key is on the left half
+                high = mid - 1; 
             } else {
                 return mid; // Key found
             }
@@ -92,34 +92,37 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC19: Find a Bogie ID (Binary Search) ---\n");
+        System.out.println("--- UC20: Exception Handling During Search Operations ---\n");
 
-        String[] preSortedBogieIds = {"AC_2Tier_101", "AC_3Tier_202", "FirstClass_001", "General_505", "Sleeper_999"};
-        System.out.println("Pre-sorted Bogie IDs: " + Arrays.toString(preSortedBogieIds) + "\n");
+        System.out.println("[Test: testSearch_ThrowsExceptionWhenEmpty]");
+        String[] emptyArr = {};
+        try {
+            searchBogie(emptyArr, "BG101");
+            System.out.println("FAIL: Search incorrectly executed on an empty array!");
+        } catch (IllegalStateException e) {
+            System.out.println("Success! Validation Caught Exception -> " + e.getMessage());
+        }
 
-        System.out.println("[Test: Basic Successful Search]");
-        String key1 = "General_505";
-        int result1 = binarySearch(preSortedBogieIds, key1);
-        System.out.println("Key: " + key1 + " -> Found at index: " + result1);
+        System.out.println("\n[Test: testSearch_AllowsSearchWhenDataExists]");
+        String[] validArr = {"BG101", "BG205", "BG309", "BG412"};
+        try {
+            searchBogie(validArr, "BG101");
+            System.out.println("Success! Allowed execution without exception on populated array.");
+        } catch (IllegalStateException e) {
+            System.out.println("FAIL: Should not throw exception on populated data.");
+        }
 
-        System.out.println("\n[Test: Search at Bounds (First Element)]");
-        String key2 = "AC_2Tier_101";
-        int result2 = binarySearch(preSortedBogieIds, key2);
-        System.out.println("Key: " + key2 + " -> Found at index: " + result2);
+        System.out.println("\n[Test: testSearch_BogieFoundAfterValidation]");
+        int result1 = searchBogie(validArr, "BG205");
+        System.out.println("Searching for 'BG205' -> Match found? " + (result1 >= 0));
 
-        System.out.println("\n[Test: Search at Bounds (Last Element)]");
-        String key3 = "Sleeper_999";
-        int result3 = binarySearch(preSortedBogieIds, key3);
-        System.out.println("Key: " + key3 + " -> Found at index: " + result3);
+        System.out.println("\n[Test: testSearch_BogieNotFoundAfterValidation]");
+        int result2 = searchBogie(validArr, "BG999");
+        System.out.println("Searching for 'BG999' -> Match found? " + (result2 >= 0));
 
-        System.out.println("\n[Test: Value Not Found]");
-        String key4 = "Luxury_100";
-        int result4 = binarySearch(preSortedBogieIds, key4);
-        System.out.println("Key: " + key4 + " -> Found at index: " + result4 + " (-1 represents not found)");
-
-        System.out.println("\n[Test: Single Element Array Search]");
-        String[] singleArr = {"Cargo_001"};
-        int result5 = binarySearch(singleArr, "Cargo_001");
-        System.out.println("Searching Single Element 'Cargo_001' in " + Arrays.toString(singleArr) + " -> Found at index: " + result5);
+        System.out.println("\n[Test: testSearch_SingleElementValidCase]");
+        String[] singleArr = {"BG101"};
+        int result3 = searchBogie(singleArr, "BG101");
+        System.out.println("Searching for 'BG101' in " + Arrays.toString(singleArr) + " -> Match found? " + (result3 >= 0));
     }
 }
