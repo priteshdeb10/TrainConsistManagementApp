@@ -70,38 +70,56 @@ public class TrainConsistManagementApp {
         }
     }
 
+    // UC19: Binary Search for String IDs using low/high/mid
+    public static int binarySearch(String[] arr, String key) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            int cmp = arr[mid].compareTo(key);
+
+            if (cmp < 0) {
+                low = mid + 1; // Key is on the right half
+            } else if (cmp > 0) {
+                high = mid - 1; // Key is on the left half
+            } else {
+                return mid; // Key found
+            }
+        }
+        return -1; // Not found
+    }
+
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC17: Sort Bogie Names Using Arrays.sort() ---\n");
+        System.out.println("--- UC19: Find a Bogie ID (Binary Search) ---\n");
 
-        System.out.println("[Test: testSort_BasicAlphabeticalSorting]");
-        String[] arr1 = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
-        System.out.println("Original: " + Arrays.toString(arr1));
-        Arrays.sort(arr1);
-        System.out.println("Sorted:   " + Arrays.toString(arr1) + "\n");
+        String[] preSortedBogieIds = {"AC_2Tier_101", "AC_3Tier_202", "FirstClass_001", "General_505", "Sleeper_999"};
+        System.out.println("Pre-sorted Bogie IDs: " + Arrays.toString(preSortedBogieIds) + "\n");
 
-        System.out.println("[Test: testSort_UnsortedInput]");
-        String[] arr2 = {"Luxury", "General", "Sleeper", "AC Chair"};
-        System.out.println("Original: " + Arrays.toString(arr2));
-        Arrays.sort(arr2);
-        System.out.println("Sorted:   " + Arrays.toString(arr2) + "\n");
+        System.out.println("[Test: Basic Successful Search]");
+        String key1 = "General_505";
+        int result1 = binarySearch(preSortedBogieIds, key1);
+        System.out.println("Key: " + key1 + " -> Found at index: " + result1);
 
-        System.out.println("[Test: testSort_AlreadySortedArray]");
-        String[] arr3 = {"AC Chair", "First Class", "General"};
-        System.out.println("Original: " + Arrays.toString(arr3));
-        Arrays.sort(arr3);
-        System.out.println("Sorted:   " + Arrays.toString(arr3) + "\n");
+        System.out.println("\n[Test: Search at Bounds (First Element)]");
+        String key2 = "AC_2Tier_101";
+        int result2 = binarySearch(preSortedBogieIds, key2);
+        System.out.println("Key: " + key2 + " -> Found at index: " + result2);
 
-        System.out.println("[Test: testSort_DuplicateBogieNames]");
-        String[] arr4 = {"Sleeper", "AC Chair", "Sleeper", "General"};
-        System.out.println("Original: " + Arrays.toString(arr4));
-        Arrays.sort(arr4);
-        System.out.println("Sorted:   " + Arrays.toString(arr4) + "\n");
+        System.out.println("\n[Test: Search at Bounds (Last Element)]");
+        String key3 = "Sleeper_999";
+        int result3 = binarySearch(preSortedBogieIds, key3);
+        System.out.println("Key: " + key3 + " -> Found at index: " + result3);
 
-        System.out.println("[Test: testSort_SingleElementArray]");
-        String[] arr5 = {"Sleeper"};
-        System.out.println("Original: " + Arrays.toString(arr5));
-        Arrays.sort(arr5);
-        System.out.println("Sorted:   " + Arrays.toString(arr5) + "\n");
+        System.out.println("\n[Test: Value Not Found]");
+        String key4 = "Luxury_100";
+        int result4 = binarySearch(preSortedBogieIds, key4);
+        System.out.println("Key: " + key4 + " -> Found at index: " + result4 + " (-1 represents not found)");
+
+        System.out.println("\n[Test: Single Element Array Search]");
+        String[] singleArr = {"Cargo_001"};
+        int result5 = binarySearch(singleArr, "Cargo_001");
+        System.out.println("Searching Single Element 'Cargo_001' in " + Arrays.toString(singleArr) + " -> Found at index: " + result5);
     }
 }
