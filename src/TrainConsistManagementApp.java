@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class TrainConsistManagementApp {
 
     // Custom Exception representing business validation failure
@@ -68,79 +70,38 @@ public class TrainConsistManagementApp {
         }
     }
 
-    // Bubble sort algorithm implementation for UC16
-    public static void bubbleSort(int[] capacities) {
-        int n = capacities.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                // Swap values when left element is greater than right element
-                if (capacities[j] > capacities[j + 1]) {
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
-    }
-
-    public static void printArray(int[] array) {
-        System.out.print("{");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.print("}");
-    }
-
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC16: Sort Passenger Bogies by Capacity (Bubble Sort) ---\n");
+        System.out.println("--- UC17: Sort Bogie Names Using Arrays.sort() ---\n");
 
-        System.out.println("[Test: testSort_BasicSorting]");
-        int[] arr1 = {72, 56, 24, 70, 60};
-        System.out.print("Original: ");
-        printArray(arr1);
-        bubbleSort(arr1);
-        System.out.print("\nSorted:   ");
-        printArray(arr1);
-        System.out.println("\n");
+        System.out.println("[Test: testSort_BasicAlphabeticalSorting]");
+        String[] arr1 = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        System.out.println("Original: " + Arrays.toString(arr1));
+        Arrays.sort(arr1);
+        System.out.println("Sorted:   " + Arrays.toString(arr1) + "\n");
+
+        System.out.println("[Test: testSort_UnsortedInput]");
+        String[] arr2 = {"Luxury", "General", "Sleeper", "AC Chair"};
+        System.out.println("Original: " + Arrays.toString(arr2));
+        Arrays.sort(arr2);
+        System.out.println("Sorted:   " + Arrays.toString(arr2) + "\n");
 
         System.out.println("[Test: testSort_AlreadySortedArray]");
-        int[] arr2 = {24, 56, 60, 70, 72};
-        System.out.print("Original: ");
-        printArray(arr2);
-        bubbleSort(arr2);
-        System.out.print("\nSorted:   ");
-        printArray(arr2);
-        System.out.println("\n");
+        String[] arr3 = {"AC Chair", "First Class", "General"};
+        System.out.println("Original: " + Arrays.toString(arr3));
+        Arrays.sort(arr3);
+        System.out.println("Sorted:   " + Arrays.toString(arr3) + "\n");
 
-        System.out.println("[Test: testSort_DuplicateValues]");
-        int[] arr3 = {72, 56, 56, 24};
-        System.out.print("Original: ");
-        printArray(arr3);
-        bubbleSort(arr3);
-        System.out.print("\nSorted:   ");
-        printArray(arr3);
-        System.out.println("\n");
+        System.out.println("[Test: testSort_DuplicateBogieNames]");
+        String[] arr4 = {"Sleeper", "AC Chair", "Sleeper", "General"};
+        System.out.println("Original: " + Arrays.toString(arr4));
+        Arrays.sort(arr4);
+        System.out.println("Sorted:   " + Arrays.toString(arr4) + "\n");
 
         System.out.println("[Test: testSort_SingleElementArray]");
-        int[] arr4 = {50};
-        System.out.print("Original: ");
-        printArray(arr4);
-        bubbleSort(arr4);
-        System.out.print("\nSorted:   ");
-        printArray(arr4);
-        System.out.println("\n");
-
-        System.out.println("[Test: testSort_AllEqualValues]");
-        int[] arr5 = {40, 40, 40};
-        System.out.print("Original: ");
-        printArray(arr5);
-        bubbleSort(arr5);
-        System.out.print("\nSorted:   ");
-        printArray(arr5);
-        System.out.println();
+        String[] arr5 = {"Sleeper"};
+        System.out.println("Original: " + Arrays.toString(arr5));
+        Arrays.sort(arr5);
+        System.out.println("Sorted:   " + Arrays.toString(arr5) + "\n");
     }
 }
