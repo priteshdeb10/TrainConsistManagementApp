@@ -43,9 +43,9 @@ public class TrainConsistManagementApp {
         }
     }
 
-    // GoodsBogie for UC15
+    // GoodsBogie class
     static class GoodsBogie extends Bogie {
-        private String shape;  // "Rectangular" or "Cylindrical"
+        private String shape;
         private String cargo;
 
         public GoodsBogie(String name, int capacity, String shape) throws InvalidCapacityException {
@@ -61,47 +61,51 @@ public class TrainConsistManagementApp {
             this.cargo = cargo;
         }
         
-        public String getShape() {
-            return shape;
-        }
+        public String getShape() { return shape; }
+        public String getCargo() { return cargo; }
+    }
 
-        public String getCargo() {
-            return cargo;
+    // UC18: Linear Search for Bogie ID
+    public static boolean linearSearch(String[] arr, String key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(key)) {
+                return true; // Match found, terminate early
+            }
         }
+        return false; // Not found
     }
 
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC17: Sort Bogie Names Using Arrays.sort() ---\n");
+        System.out.println("--- UC18: Linear Search for Bogie ID ---\n");
 
-        System.out.println("[Test: testSort_BasicAlphabeticalSorting]");
-        String[] arr1 = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
-        System.out.println("Original: " + Arrays.toString(arr1));
-        Arrays.sort(arr1);
-        System.out.println("Sorted:   " + Arrays.toString(arr1) + "\n");
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        System.out.println("Array of Bogie IDs: " + Arrays.toString(bogieIds) + "\n");
 
-        System.out.println("[Test: testSort_UnsortedInput]");
-        String[] arr2 = {"Luxury", "General", "Sleeper", "AC Chair"};
-        System.out.println("Original: " + Arrays.toString(arr2));
-        Arrays.sort(arr2);
-        System.out.println("Sorted:   " + Arrays.toString(arr2) + "\n");
+        System.out.println("[Test: testSearch_BogieFound]");
+        String key1 = "BG309";
+        boolean result1 = linearSearch(bogieIds, key1);
+        System.out.println("Searching for: " + key1 + " -> Match found? " + result1);
 
-        System.out.println("[Test: testSort_AlreadySortedArray]");
-        String[] arr3 = {"AC Chair", "First Class", "General"};
-        System.out.println("Original: " + Arrays.toString(arr3));
-        Arrays.sort(arr3);
-        System.out.println("Sorted:   " + Arrays.toString(arr3) + "\n");
+        System.out.println("\n[Test: testSearch_BogieNotFound]");
+        String key2 = "BG999";
+        boolean result2 = linearSearch(bogieIds, key2);
+        System.out.println("Searching for: " + key2 + " -> Match found? " + result2);
 
-        System.out.println("[Test: testSort_DuplicateBogieNames]");
-        String[] arr4 = {"Sleeper", "AC Chair", "Sleeper", "General"};
-        System.out.println("Original: " + Arrays.toString(arr4));
-        Arrays.sort(arr4);
-        System.out.println("Sorted:   " + Arrays.toString(arr4) + "\n");
+        System.out.println("\n[Test: testSearch_FirstElementMatch]");
+        String key3 = "BG101";
+        boolean result3 = linearSearch(bogieIds, key3);
+        System.out.println("Searching for: " + key3 + " -> Match found? " + result3);
 
-        System.out.println("[Test: testSort_SingleElementArray]");
-        String[] arr5 = {"Sleeper"};
-        System.out.println("Original: " + Arrays.toString(arr5));
-        Arrays.sort(arr5);
-        System.out.println("Sorted:   " + Arrays.toString(arr5) + "\n");
+        System.out.println("\n[Test: testSearch_LastElementMatch]");
+        String key4 = "BG550";
+        boolean result4 = linearSearch(bogieIds, key4);
+        System.out.println("Searching for: " + key4 + " -> Match found? " + result4);
+
+        System.out.println("\n[Test: testSearch_SingleElementArray]");
+        String[] singleBogie = {"BG101"};
+        String key5 = "BG101";
+        boolean result5 = linearSearch(singleBogie, key5);
+        System.out.println("Searching for: " + key5 + " in " + Arrays.toString(singleBogie) + " -> Match found? " + result5);
     }
 }
